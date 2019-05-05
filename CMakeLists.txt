@@ -18,11 +18,14 @@ if (${UNIX})
 elseif (${WIN32})
     set(SC_CODEGEN_TOOL "${SC_BIN_PATH}/sc-code-generator.exe")
 endif()
-include("${SC_MACHINE_ROOT}/cmake/codegen.cmake")
+
 
 find_package(Java)
 
 set(CMAKE_MODULE_PATH "${SC_MACHINE_ROOT}/cmake")
+
+include("${CMAKE_MODULE_PATH}/codegen.cmake")
+include("${CMAKE_MODULE_PATH}/api.cmake")
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${SC_BIN_PATH})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${SC_BIN_PATH})

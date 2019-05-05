@@ -1,0 +1,15 @@
+#pragma once
+
+#if defined (${API_NAME}_SELF_BUILD)
+# if defined (SC_PLATFORM_WIN)
+#   define ${API_NAME}_API __declspec(dllexport)
+# else
+#   define ${API_NAME}_API
+# endif
+#else
+# if defined (SC_PLATFORM_WIN)
+#   define ${API_NAME}_API __declspec(dllimport)
+# else
+#   define ${API_NAME}_API
+# endif
+#endif
