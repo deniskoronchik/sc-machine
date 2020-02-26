@@ -25,6 +25,9 @@ class BaseObject:
   def attrs(self) -> dict:
     return self._attrs
 
+  def __str__(self):
+    return 'name: {}, attrs: {}'.format(self.get_fullname(), self.attrs)
+
   
 class Klass(BaseObject):
 
@@ -53,8 +56,7 @@ class Function(BaseObject):
 
     self._parent = parent
     self._is_static = is_static
-    self._is_const = is_const
-    
+    self._is_const = is_const    
 
   def get_fullname(self) -> str:
     if self._parent:
@@ -77,3 +79,12 @@ class Function(BaseObject):
   @property
   def is_const(self) -> bool:
     return self._is_const
+
+  def __str__(self):
+    return '{}, parent: {}, is_method: {}, is_static: {}, is_const: {}'.format(
+      BaseObject.__str__(self),
+      self.parent.get_fullname() if self.parent else 'None',
+      self.is_method,
+      self.is_static,
+      self.is_const
+    )

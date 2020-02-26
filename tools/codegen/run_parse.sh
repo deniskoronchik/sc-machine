@@ -1,0 +1,1 @@
+python3 main.py -i ../../sc-memory/sc-memory/ -t sc-memory -o /tmp/test -f="-D__SC_REFLECTION_PARSER__;" --debug
