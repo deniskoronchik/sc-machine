@@ -2,12 +2,47 @@ import typing
 
 from enum import Enum
 
+class Attributes:
+
+  def __init__(self, attrs: dict = {}):
+    self._attrs = dict(attrs)
+
+  def __getitem__(self, key):
+    try:
+      return self._attrs[key]
+    except KeyError:
+      return None
+
+  def __setitem__(self, key, value):
+    self._attrs[key] = value
+
+  def __len__(self):
+    return len(self._attrs)
+
+  def __str__(self):
+    return str(self._attrs)
+
+  # unittest support
+  def _user_attrs_count(self):
+    result = 0
+    for k in self._attrs.keys():
+      if k.startswith('$'):
+        continue
+      result += 1
+    
+    return result
 
 class BaseObject:
   def __init__(self, name: str='', namespaces=[], attrs={}, parent=None):
     self._name = name
     self._namspaces = namespaces
-    self._attrs = attrs
+    if isinstance(attrs, dict):
+      self._attrs = Attributes(attrs=attrs)
+    elif isinstance(attrs, Attributes):
+      self._attrs = attrs
+    else:
+      raise 'attrs parameter should have on of two types: Attributes or dict'
+
     self._parent = parent
 
   def get_namespace_str(self) -> str:
@@ -24,7 +59,7 @@ class BaseObject:
     return self._name
 
   @property
-  def attrs(self) -> dict:
+  def attrs(self) -> Attributes:
     return self._attrs
 
   @property
@@ -40,7 +75,7 @@ class BaseObject:
       self.__class__.__name__,
       self.get_fullname(),
       self.parent.get_fullname() if self.parent else 'None',
-      self.attrs
+      str(self.attrs)
       )
 
 class Field(BaseObject):
@@ -60,27 +95,21 @@ class Field(BaseObject):
   
 class Klass(BaseObject):
 
-  def __init__(self, **kwargs):
+  def __init__(self, base_classes: [str]=[], fields: [Field]=[], **kwargs):
     BaseObject.__init__(self, **kwargs)
 
-    self._base_classes = []
-    self._fields = []
+    self._base_classes = base_classes
+    self._fields = fields
+    for f in self._fields:
+      f.parent = self
   
   @property
   def base_classes(self) -> [str]:
     return self._base_classes
 
-  @base_classes.setter
-  def base_classes(self, classes: [str]):
-    self._base_classes = classes
-
   @property
   def fields(self) -> [Field]:
     return self._fields
-
-  @fields.setter
-  def fields(self, value: [Field]):
-    self._fields = value
 
 
   def __str__(self) -> str:

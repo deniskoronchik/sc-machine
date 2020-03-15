@@ -9,14 +9,19 @@ from typing import List
 
 class Generator:
 
-  def __init__(self, input_path: str, flags: str, output_path: str):
+  def __init__(self, input_path: str, flags: str, output_path: str, is_debug: bool):
     self.input_path = input_path
     self.output_path = output_path
     self.flags = flags    
+    self.is_debug = is_debug
 
   def run(self) -> bool:
     parser = cpp.Parser()
-    status = parser.parse(self.input_path, flags=self.flags)
+    status = parser.parse(
+      self.input_path,
+      flags=self.flags.split(';'),
+      is_debug=self.is_debug
+    )
     if not status:
       return False
 
@@ -70,7 +75,8 @@ class Codegen:
 
       generator = Generator(f, 
         flags=self.params.flags,
-        output_path=self.params.output
+        output_path=self.params.output,
+        is_debug=self.params.is_debug
         )
       status = generator.run()
       
