@@ -48,6 +48,7 @@ class TestParser(unittest.TestCase):
     self.assertEqual(cl.name, 'MyClass')
     self.assertEqual(len(cl.base_classes), 1)
     self.assertEqual(cl.base_classes[0], 'ScObject')
+    self.assertEqual(cl.gen_body_line, 9)
 
     self.assertEqual(cl.attrs['Attr_No_Value'], True)
     self.assertEqual(cl.attrs['Attr_Str'], 'str_value')

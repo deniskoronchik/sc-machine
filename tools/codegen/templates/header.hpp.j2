@@ -1,0 +1,21 @@
+{% import 'macros.hpp.j2' as macros %}
+
+#include <memory>
+
+#include "sc-memory/sc_memory.hpp"
+#include "sc-memory/sc_event.hpp"
+
+{% for klass in classes %}
+// Generate code for {{ klass.name }}
+
+#define {{ fileID }}_{{ klass.gen_body_line }}_init
+{% set body = macros.ResolveKeynodes(klass.fields) %}
+{{ macros.GenerateInitCode(klass, '_InitInternal', body, pre_modifier='', post_modifier='override') }}
+
+#define {{ fileID }}_{{ klass.gen_body_line }}_initStatic
+{{ macros.GenerateInitCode(klass, '_InitStaticInternal', '', pre_modifier='static', post_modifier='') }}
+
+{% endfor %}
+
+#undef ScFileID
+#define ScFileID {{fileID}}

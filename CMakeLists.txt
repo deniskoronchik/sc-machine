@@ -14,9 +14,7 @@ option (SC_BUILD_TESTS "Flag to build unit tests" OFF)
 
 # codegen
 if (${UNIX})
-    set(SC_CODEGEN_TOOL "${SC_BIN_PATH}/sc-code-generator")
-elseif (${WIN32})
-    set(SC_CODEGEN_TOOL "${SC_BIN_PATH}/sc-code-generator.exe")
+    set(SC_CODEGEN_TOOL "${SC_MACHINE_ROOT}/tools/codegen/main.py")
 endif()
 include("${SC_MACHINE_ROOT}/cmake/codegen.cmake")
 

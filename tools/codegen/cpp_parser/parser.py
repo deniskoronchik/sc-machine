@@ -17,6 +17,7 @@ class Parser:
 
     args = ['-std=c++17']
     args.extend(flags)
+
     try:
       tu = ci.TranslationUnit.from_source(
         file_path,

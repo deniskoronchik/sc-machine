@@ -37,6 +37,7 @@ class ClassParser:
     return types.Field(
       name=name, 
       is_const=cursor.type.is_const_qualified(),
+      is_static=cursor.is_static_method,
       attrs=meta)
 
 def ParseClass(cursor: ci.Cursor) -> types.Klass:

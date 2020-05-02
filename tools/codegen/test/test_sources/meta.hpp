@@ -1,5 +1,6 @@
 #include "sc-memory/sc_defines.hpp"
 #include "sc-memory/sc_object.hpp"
+#include "sc-memory/sc_addr.hpp"
 
 #include <string>
 

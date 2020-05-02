@@ -9,7 +9,7 @@ macro(sc_codegen_ex Target SrcPath OutputPath)
 
     get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
     foreach(dir ${dirs})
-          set(META_FLAGS ${META_FLAGS} "-I${dir}")
+        set(META_FLAGS ${META_FLAGS} "-I${dir}")
     endforeach()
 
     # include the system directories
@@ -31,27 +31,27 @@ macro(sc_codegen_ex Target SrcPath OutputPath)
         add_custom_command(
             PRE_BUILD
             TARGET ${Target}
-            COMMAND call "${SC_CODEGEN_TOOL}"
+            COMMAND call "python3"
+            ${SC_CODEGEN_TOOL}
             --target     "${Target}"
-            --source     "${SrcPath}"
+            --input      "${SrcPath}"
             --output     "${OutputPath}"
-            --flags      "${META_FLAGS}"
-            --build_dir  "${CMAKE_CURRENT_BINARY_DIR}"
-            --cache
+            --flags      "=\"${META_FLAGS}\""
         )
     else()
         file(GLOB_RECURSE HEADER_FILES "${SrcPath}/*.hpp")
 
+        message("-D__SC_REFLECTION_PARSER__;${META_FLAGS}")
+
         set (CACHE_FILE "${CMAKE_CURRENT_BINARY_DIR}/${Target}.gen_cache")
         add_custom_command(
             OUTPUT ${CACHE_FILE}
-            COMMAND "${SC_CODEGEN_TOOL}"
-            --target     "${Target}"
-            --source     "${SrcPath}"
-            --output     "${OutputPath}"
-            --build_dir  "${CMAKE_CURRENT_BINARY_DIR}"
-            --flags      "'${META_FLAGS}'"
-            --cache
+            COMMAND "python3"       
+            "${SC_CODEGEN_TOOL}"
+            --target ${Target}
+            --input ${SrcPath}
+            --output ${OutputPath}
+            --flags="-D__SC_REFLECTION_PARSER__;${META_FLAGS}"
             DEPENDS ${HEADER_FILES}
         )
 

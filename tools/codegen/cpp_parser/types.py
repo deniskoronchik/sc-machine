@@ -22,6 +22,9 @@ class Attributes:
   def __str__(self):
     return str(self._attrs)
 
+  def __contains__(self, item):
+    return item in self._attrs
+
   # unittest support
   def _user_attrs_count(self):
     result = 0
@@ -80,20 +83,49 @@ class BaseObject:
 
 class Field(BaseObject):
 
-  def __init__(self, is_const: bool = False, **kwargs):
+  def __init__(self, is_const: bool = False, is_static: bool = False, **kwargs):
     BaseObject.__init__(self, **kwargs)
 
     self._is_const = is_const
+    self._is_static = is_static
 
   @property
   def is_const(self) -> bool:
     return self._is_const
+
+  @property
+  def is_static(self) -> bool:
+    return self._is_static
+
+  @property
+  def is_keynode(self) -> bool:
+    return 'Keynode' in self.attrs
+
+  @property
+  def keynode_type(self) -> str:
+    try:
+      return self.attrs['ForceCreate']
+    except KeyError:
+      pass
+
+    return 'ScType::Node'
+
+  @property
+  def keynode_idtf(self) -> str:
+    try:
+      return self.attrs['Keynode']
+    except KeyError:
+      pass
+
+    return None
 
   def __str__(self) -> str:
     base_str = BaseObject.__str__(self)
     return '{}, is_const: {}'.format(base_str, self.is_const)
   
 class Klass(BaseObject):
+
+  MetaBody = 'GenBody'
 
   def __init__(self, base_classes: [str]=[], fields: [Field]=[], **kwargs):
     BaseObject.__init__(self, **kwargs)
@@ -111,7 +143,12 @@ class Klass(BaseObject):
   def fields(self) -> [Field]:
     return self._fields
 
-
+  @property
+  def gen_body_line(self) -> int:
+    res = self.attrs['$line_number']
+    assert res
+    return res
+    
   def __str__(self) -> str:
     base_str = BaseObject.__str__(self)
     fields_str = 'fields: '

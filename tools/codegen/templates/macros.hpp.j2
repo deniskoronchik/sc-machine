@@ -1,0 +1,22 @@
+{% macro GenerateInitCode(klass, func_name, method_code, pre_modifier='', post_modifier='') -%}
+{% set pre = ''%}
+{% if pre_modifier %}
+  {% set pre=pre_modifier ~ ' ' %}
+{% endif %}
+{{ pre }}bool {{ func_name }}() {{ post_modifier }} \
+{ \
+  ScMemoryContext ctx(sc_access_lvl_make_min, "{{ klass.name }}::{{ func_name }}"); \
+  bool result = true; \
+  {{ method_code }} \
+  return result; \
+}
+
+{%- endmacro %}
+
+{% macro ResolveKeynodes(fields) -%}
+{% for field in fields %}
+  {% if field.is_keynode %}
+  {{ field.name }} = ctx.HelperResolveSystemIdtf("{{ field.keynode_idtf }}"); \
+  {% endif%}
+{% endfor %}
+{%- endmacro %}
