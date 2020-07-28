@@ -7,6 +7,7 @@ class ClassParser:
 
   def parse(self, cursor: ci.Cursor) -> types.Klass:
   
+    # print (dir(ci.CursorKind))
     base_classes = []
     fields = []
     class_attrs = {}
@@ -14,7 +15,10 @@ class ClassParser:
       if child.kind == ci.CursorKind.CXX_BASE_SPECIFIER:
         base_classes.append(child.type.spelling)
       elif child.kind == ci.CursorKind.FIELD_DECL:
-        member = self.parse_field(child)
+        member = self.parse_field(child, False)
+        fields.append(member)
+      elif child.kind == ci.CursorKind.VAR_DECL:
+        member = self.parse_field(child, True)
         fields.append(member)
       elif child.kind == ci.CursorKind.CXX_METHOD:
         if child.spelling == '__null_meta':
@@ -27,7 +31,7 @@ class ClassParser:
       attrs=class_attrs)
     
 
-  def parse_field(self, cursor: ci.Cursor) -> types.Field:
+  def parse_field(self, cursor: ci.Cursor, is_static: bool) -> types.Field:
     
     name = cursor.displayname
     if not name or len(name) == 0:
@@ -37,7 +41,7 @@ class ClassParser:
     return types.Field(
       name=name, 
       is_const=cursor.type.is_const_qualified(),
-      is_static=cursor.is_static_method,
+      is_static=is_static,
       attrs=meta)
 
 def ParseClass(cursor: ci.Cursor) -> types.Klass:

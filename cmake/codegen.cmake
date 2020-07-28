@@ -3,23 +3,24 @@ macro(sc_codegen_ex Target SrcPath OutputPath)
     get_target_property(DIRECTORIES ${Target} INCLUDE_DIRECTORIES)
 
     # build the include directory flags
+    set(META_FLAGS "")
     foreach (DIRECTORY ${DIRECTORIES})
-        set(META_FLAGS ${META_FLAGS} "-I${DIRECTORY}")
+        list(APPEND META_FLAGS "-I${DIRECTORY}")
     endforeach ()
 
     get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
     foreach(dir ${dirs})
-        set(META_FLAGS ${META_FLAGS} "-I${dir}")
+        list(APPEND META_FLAGS "-I${dir}")
     endforeach()
 
     # include the system directories
     if (MSVC)
         # assume ${VS_VERSION} is the version of Visual Studio being used to compile
-        set(META_FLAGS ${META_FLAGS} 
+        list(APPEND META_FLAGS
             "-IC:/Program Files (x86)/Microsoft Visual Studio ${VS_VERSION}/VC/include"
         )
     elseif (${UNIX})
-        set(META_FLAGS ${META_FLAGS}
+        list(APPEND META_FLAGS
             "-I${LIBCLANG_LIBDIR}/clang/${LIBCLANG_VERSION_STRING}/include/"
         )
     else ()
@@ -41,7 +42,8 @@ macro(sc_codegen_ex Target SrcPath OutputPath)
     else()
         file(GLOB_RECURSE HEADER_FILES "${SrcPath}/*.hpp")
 
-        message("-D__SC_REFLECTION_PARSER__;${META_FLAGS}")
+        list (APPEND META_FLAGS "-D__SC_REFLECTION_PARSER__")
+        separate_arguments (STR UNIX_COMMAND "${META_FLAGS}")
 
         set (CACHE_FILE "${CMAKE_CURRENT_BINARY_DIR}/${Target}.gen_cache")
         add_custom_command(
@@ -51,7 +53,7 @@ macro(sc_codegen_ex Target SrcPath OutputPath)
             --target ${Target}
             --input ${SrcPath}
             --output ${OutputPath}
-            --flags="-D__SC_REFLECTION_PARSER__;${META_FLAGS}"
+            --flags="${STR}"
             DEPENDS ${HEADER_FILES}
         )
 

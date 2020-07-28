@@ -10,10 +10,13 @@
 
 #define {{ fileID }}_{{ klass.gen_body_line }}_init
 {% set body = macros.ResolveKeynodes(klass.fields) %}
-{{ macros.GenerateInitCode(klass, '_InitInternal', body, pre_modifier='', post_modifier='override') }}
+{{ macros.GenerateInitCode(klass, '_InitInternal', body, pre_modifier='', post_modifier='') }}
 
 #define {{ fileID }}_{{ klass.gen_body_line }}_initStatic
-{{ macros.GenerateInitCode(klass, '_InitStaticInternal', '', pre_modifier='static', post_modifier='') }}
+{% set body = macros.ResolveStaticKeynodes(klass.fields) %}
+{{ macros.GenerateInitCode(klass, '_InitStaticInternal', body, pre_modifier='static', post_modifier='') }}
+
+#define {{ fileID }}_{{ klass.gen_body_line }}_decl
 
 {% endfor %}
 

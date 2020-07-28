@@ -102,6 +102,10 @@ class Field(BaseObject):
     return 'Keynode' in self.attrs
 
   @property
+  def is_template(self) -> bool:
+    return 'Template' in self.attrs
+
+  @property
   def keynode_type(self) -> str:
     try:
       return self.attrs['ForceCreate']
@@ -119,9 +123,22 @@ class Field(BaseObject):
 
     return None
 
+  @property
+  def template_value(self) -> str:
+    try:
+      return self.attrs['Template']
+    except KeyError:
+      pass
+
+    return None
+  
+  @property
+  def has_force_type(self) -> str:
+    return 'ForceCreate' in self.attrs
+
   def __str__(self) -> str:
     base_str = BaseObject.__str__(self)
-    return '{}, is_const: {}'.format(base_str, self.is_const)
+    return '{}, is_const: {}, is_static: {}, attrs: {}'.format(base_str, self.is_const, self.is_static, self.attrs)
   
 class Klass(BaseObject):
 

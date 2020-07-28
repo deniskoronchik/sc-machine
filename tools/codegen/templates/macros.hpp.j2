@@ -13,10 +13,31 @@
 
 {%- endmacro %}
 
+
+{% macro ResolveKeynodeItem(field) -%}
+{% if field.has_force_type %}
+  {{ field.name }} = ctx.HelperResolveSystemIdtf("{{ field.keynode_idtf }}"); \
+    {% else %}
+  {{ field.name }} = ctx.HelperResolveSystemIdtf("{{ field.keynode_idtf }}", "{{ field.keynode_type }}"); \
+    {% endif %}
+  result = result && {{ field.name }}.IsValid(); \
+{%- endmacro %}
+
 {% macro ResolveKeynodes(fields) -%}
 {% for field in fields %}
-  {% if field.is_keynode %}
-  {{ field.name }} = ctx.HelperResolveSystemIdtf("{{ field.keynode_idtf }}"); \
+  {% if field.is_keynode and not field.is_static %}
+{{ ResolveKeynodeItem(field) }}
   {% endif%}
 {% endfor %}
+{%- endmacro %}
+
+{% macro ResolveStaticKeynodes(fields) -%}
+{% for field in fields %}
+  {% if field.is_keynode and field.is_static %}
+{{ ResolveKeynodeItem(field) }}
+  {% endif%}
+{% endfor %}
+{%- endmacro %}
+
+{% macro GenerateDeclarations(klass) -%}
 {%- endmacro %}

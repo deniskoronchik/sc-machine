@@ -3,6 +3,7 @@
 import os
 import re
 import shutil
+import sys
 
 import cpp_parser as cpp
 
@@ -27,6 +28,7 @@ class Generator:
       trim_blocks=True)
 
   def run(self) -> bool:
+
     parser = cpp.Parser()
     status = parser.parse(
       self.input_path,
@@ -112,13 +114,16 @@ class Codegen:
     return collected_files
 
   def log(self, msg, newline=True):
-    if self.params.is_debug:
-      if newline:
-        print(msg)
-      else:
-        print(msg, end='')
+    if newline:
+      print(msg)
+    else:
+      print(msg, end='')
+
+    sys.stdout.flush()
 
   def process(self, extensions=['.hpp', '.h']):
+
+    print ()
 
     # recreate output directory
     if os.path.isdir(self.params.output):
@@ -133,7 +138,7 @@ class Codegen:
     index = 1
     for f in files:
       self.log(colored('[{}/{}] Process {} ... '.format(index, len(files), f), 'white'), newline=False)
-
+      
       generator = Generator(f, 
         flags=self.params.flags,
         output_path=self.params.output,
