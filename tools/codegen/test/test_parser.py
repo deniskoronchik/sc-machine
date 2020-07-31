@@ -48,17 +48,34 @@ class TestParser(unittest.TestCase):
     self.assertEqual(cl.name, 'MyClass')
     self.assertEqual(len(cl.base_classes), 1)
     self.assertEqual(cl.base_classes[0], 'ScObject')
-    self.assertEqual(cl.gen_body_line, 9)
+    self.assertEqual(cl.gen_body_line, 11)
 
     self.assertEqual(cl.attrs['Attr_No_Value'], True)
-    self.assertEqual(cl.attrs['Attr_Str'], 'str_value')
+    self.assertEqual(cl.attrs['Attr_Str'], '\"str_value\"')
     self.assertEqual(cl.attrs._user_attrs_count(), 2)
 
-    self.assertEqual(len(cl.fields), 1)
+    self.assertEqual(len(cl.fields), 3)
     field = cl.fields[0]
     self.assertEqual(field.name, 'm_member')
-    self.assertEqual(field.attrs['Attr_With_Value'], 'value_1')
-    self.assertEqual(field.attrs['Attr_No_Value'], True)
     self.assertEqual(field.attrs._user_attrs_count(), 2)
+    self.assertEqual(field.attrs['Attr_With_Value'], 'value_1')
+    self.assertEqual(field.attrs['Attr_No_Value'], True)    
+    self.assertFalse(field.is_static)
 
+    keynode = cl.fields[1]
+    self.assertEqual(keynode.name, 'm_keynode')
+    self.assertEqual(keynode.attrs._user_attrs_count(), 2)
+    self.assertEqual(keynode.attrs['ForceCreate'], 'ScType::NodeConst')
+    self.assertEqual(keynode.attrs['Keynode'], '\"keynode\"')
+    
+    self.assertTrue(keynode.is_keynode)
+    self.assertEqual(keynode.keynode_idtf, 'keynode')
+    self.assertEqual(keynode.keynode_type, 'ScType::NodeConst')
+
+    template = cl.fields[2]
+    self.assertEqual(template.name, 'm_template')
+    self.assertEqual(template.attrs._user_attrs_count(), 1)
+    self.assertTrue(template.is_template)
+    self.assertEqual(template.template_value, 'template_idtf')
+    
     

@@ -13,30 +13,50 @@
 
 {%- endmacro %}
 
-
+{# Keynodes #}
 {% macro ResolveKeynodeItem(field) -%}
-{% if field.has_force_type %}
+{% if field.has_force_type == None %}
   {{ field.name }} = ctx.HelperResolveSystemIdtf("{{ field.keynode_idtf }}"); \
     {% else %}
-  {{ field.name }} = ctx.HelperResolveSystemIdtf("{{ field.keynode_idtf }}", "{{ field.keynode_type }}"); \
+  {{ field.name }} = ctx.HelperResolveSystemIdtf("{{ field.keynode_idtf }}", {{ field.keynode_type }}); \
     {% endif %}
   result = result && {{ field.name }}.IsValid(); \
 {%- endmacro %}
 
-{% macro ResolveKeynodes(fields) -%}
+
+{% macro ResolveKeynodes(fields, filter_static) -%}
 {% for field in fields %}
-  {% if field.is_keynode and not field.is_static %}
+  {% if field.is_keynode and field.is_static == filter_static %}
 {{ ResolveKeynodeItem(field) }}
   {% endif%}
 {% endfor %}
 {%- endmacro %}
 
-{% macro ResolveStaticKeynodes(fields) -%}
+
+{# Templates #}
+{% macro ResolveTemplateItem(field) -%}
+  {% set templAddr = field.name + '_addr' %}
+  ScAddr {{ templAddr }} = ctx.HelperResolveSystemIdtf("{{ field.template_value }}"); \
+  result = result && {{ templAddr }}.IsValid(); \
+  if ({{ templAddr }}.IsValid()) \
+  { \
+    result = result && ctx.HelperBuildTemplate({{ field.name }}, {{ templAddr }}); \
+  } \
+{%- endmacro %}
+
+{% macro ResolveTemplates(fields, filter_static) -%}
 {% for field in fields %}
-  {% if field.is_keynode and field.is_static %}
-{{ ResolveKeynodeItem(field) }}
+  {% if field.is_template and field.is_static == filter_static %}
+{{ ResolveTemplateItem(field) }}
   {% endif%}
 {% endfor %}
+{%- endmacro %}
+
+
+{# Fields #}
+{% macro ResolveFields(fields, filter_static) -%}
+{{- ResolveKeynodes(fields, filter_static) -}}
+{{- ResolveTemplates(fields, filter_static) -}}
 {%- endmacro %}
 
 {% macro GenerateDeclarations(klass) -%}

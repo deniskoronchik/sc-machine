@@ -8,7 +8,7 @@
 
 #include "sc_object.hpp"
 
-#include "generated/sc_keynodes.generated.hpp"
+#include "sc_keynodes.generated.hpp"
 
 // This class contains resolved keynodes for internal usage in sc-memory.
 // It's like a namespace

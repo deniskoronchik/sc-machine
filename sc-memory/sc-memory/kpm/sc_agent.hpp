@@ -12,7 +12,7 @@
 
 #include "../utils/sc_log.hpp"
 
-#include "../generated/sc_agent.generated.hpp"
+#include "sc_agent.generated.hpp"
 
 
 /* Call this function before agent module usage.

@@ -46,7 +46,7 @@ elseif (${UNIX})
                         ${Boost_LIBRARIES})
 endif(${WIN32})
 
-sc_codegen_ex(sc-memory ${CMAKE_CURRENT_SOURCE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/generated")
+sc_codegen(sc-memory ${CMAKE_CURRENT_SOURCE_DIR})
 add_dependencies(sc-memory 
   sc-core
   sc-code-generator

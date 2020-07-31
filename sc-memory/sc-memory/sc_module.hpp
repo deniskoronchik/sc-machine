@@ -10,7 +10,7 @@
 #include "sc_addr.hpp"
 #include "kpm/sc_agent.hpp"
 
-#include "generated/sc_module.generated.hpp"
+#include "sc_module.generated.hpp"
 
 class ScModule : public ScObject
 {

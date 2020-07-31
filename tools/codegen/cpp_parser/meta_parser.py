@@ -9,7 +9,7 @@ class MetaParser:
 
     # Add system attributes. All system attributes starts with '$'
     result['$line_number'] = cursor.location.line
-    reg_expr = re.compile(r"(\s*(?P<attr>[a-zA-Z0-9_]+)(\(\"(?P<value>[^\"]*)\"\))?)([,]|$)")
+    reg_expr = re.compile(r"(\s*(?P<attr>[a-zA-Z0-9_]+)(\((?P<value>(([^\)]*)|(\".*\")))\))?)([,]|$)")
     for child in cursor.get_children():
       if child.kind == ci.CursorKind.ANNOTATE_ATTR:
         # parse properties

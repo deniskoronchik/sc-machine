@@ -104,6 +104,16 @@ class Field(BaseObject):
   @property
   def is_template(self) -> bool:
     return 'Template' in self.attrs
+  
+  @property
+  def template_value(self) -> str:
+    try:
+      v = self.attrs['Template']
+      return v.replace('\"', '')
+    except KeyError:
+      pass
+  
+    return None
 
   @property
   def keynode_type(self) -> str:
@@ -117,20 +127,13 @@ class Field(BaseObject):
   @property
   def keynode_idtf(self) -> str:
     try:
-      return self.attrs['Keynode']
+      idtf = self.attrs['Keynode']
+      return idtf.replace('\"', '')
     except KeyError:
       pass
 
     return None
 
-  @property
-  def template_value(self) -> str:
-    try:
-      return self.attrs['Template']
-    except KeyError:
-      pass
-
-    return None
   
   @property
   def has_force_type(self) -> str:
@@ -162,7 +165,7 @@ class Klass(BaseObject):
 
   @property
   def gen_body_line(self) -> int:
-    res = self.attrs['$line_number']
+    res = self.attrs['$line_number'] + 1
     assert res
     return res
     
