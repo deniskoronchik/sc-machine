@@ -4,6 +4,10 @@
     - Migrate test system to `gtest`
     - Remove optional search triples support
     - `ScSet` constructor now receives reference to `ScMemoryContext` instead of pointer
+    - Replace `ScTemplateGenParams` with `ScTemplateParams`
+    
+ - **Python**:
+    - Replace `ScTemplateGenParams` with `ScTemplateParams`
 
 ## v0.6.0
 

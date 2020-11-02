@@ -201,23 +201,17 @@ enum class ScTemplateResultCode : uint8_t
 /* Parameters for template generator.
  * Can be used to replace variables by values
  */
-class ScTemplateGenParams
+class ScTemplateParams
 {
   friend class ScTemplateGenerator;
 
 public:
-  ScTemplateGenParams(ScTemplateGenParams const & other) = delete;
-  ScTemplateGenParams & operator = (ScTemplateGenParams const & other) = delete;
+  ScTemplateParams(ScTemplateParams const & other) = delete;
+  ScTemplateParams & operator = (ScTemplateParams const & other) = delete;
 
-  ScTemplateGenParams() = default;
+  ScTemplateParams() = default;
 
-  SC_DEPRECATED(0.4.0, "You should to use ScTemplateGenParams::Add")
-  _SC_EXTERN ScTemplateGenParams & add(std::string const & varIdtf, ScAddr const & value)
-  {
-    return Add(varIdtf, value);
-  }
-
-  _SC_EXTERN ScTemplateGenParams & Add(std::string const & varIdtf, ScAddr const & value)
+  _SC_EXTERN ScTemplateParams & Add(std::string const & varIdtf, ScAddr const & value)
   {
     assert(m_values.find(varIdtf) == m_values.end());
     m_values[varIdtf] = value;
@@ -236,23 +230,20 @@ public:
     return false;
   }
 
-  SC_DEPRECATED(0.4.0, "You should to use ScTemplateGenParams::IsEmpty")
-  _SC_EXTERN bool empty() const
-  {
-    return m_values.empty();
-  }
-
   _SC_EXTERN bool IsEmpty() const
   {
     return m_values.empty();
   }
 
-  _SC_EXTERN static const ScTemplateGenParams Empty;
+  _SC_EXTERN static const ScTemplateParams Empty;
 
 protected:
   using ParamsMap = std::map<std::string, ScAddr>;
   ParamsMap m_values;
 };
+
+SC_DEPRECATED(0.7.0, "Please use ScTemplateParams instead")
+using ScTemplateGenParams = ScTemplateParams;
 
 class ScTemplate final
 {
@@ -336,7 +327,7 @@ public:
 
 protected:
   // Begin: calls by memory context
-  Result Generate(ScMemoryContext & ctx, ScTemplateGenResult & result, ScTemplateGenParams const & params, ScTemplateResultCode * errorCode = nullptr) const;
+  Result Generate(ScMemoryContext & ctx, ScTemplateGenResult & result, ScTemplateParams const & params, ScTemplateResultCode * errorCode = nullptr) const;
   Result Search(ScMemoryContext & ctx, ScTemplateSearchResult & result) const;
   Result SearchInStruct(ScMemoryContext & ctx, ScAddr const & scStruct, ScTemplateSearchResult & result) const;
 

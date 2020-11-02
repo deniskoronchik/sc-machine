@@ -205,7 +205,7 @@ TEST_F(ScTemplateCommonTest, params_correct)
         ScType::EdgeAccessVarPosPerm >> "_5",
         ScType::NodeVarClass >> "_6");
 
-  ScTemplateGenParams params;
+  ScTemplateParams params;
   params.Add("_3", addrTest3).Add("_6", addrTest6);
 
   ScTemplateGenResult result;
@@ -245,7 +245,7 @@ TEST_F(ScTemplateCommonTest, params_invalid)
 
   // test edge
   {
-    ScTemplateGenParams params;
+    ScTemplateParams params;
     params.Add("_2", addrEdge2);
 
     EXPECT_FALSE(m_ctx->HelperGenTemplate(templ, result, params));

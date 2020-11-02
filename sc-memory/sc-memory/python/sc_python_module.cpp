@@ -716,10 +716,10 @@ private:
   std::shared_ptr<ScTemplate> m_impl;
 };
 
-class PyTemplateGenParams
+class PyTemplateParams
 {
 public:
-  PyTemplateGenParams() : m_impl(new ScTemplateGenParams()) {}
+  PyTemplateParams() : m_impl(new ScTemplateParams()) {}
 
   void Add(std::string const & paramName, ScAddr const & value)
   {
@@ -740,16 +740,16 @@ public:
     return m_impl->IsEmpty();
   }
 
-  ScTemplateGenParams & GetItemRef() const
+  ScTemplateParams & GetItemRef() const
   {
     return *m_impl;
   }
 
 private:
-  std::shared_ptr<ScTemplateGenParams> m_impl;
+  std::shared_ptr<ScTemplateParams> m_impl;
 };
 
-bp::object _context_helperGenTemplate(ScMemoryContext & self, PyTemplate & templ, PyTemplateGenParams & params)
+bp::object _context_helperGenTemplate(ScMemoryContext & self, PyTemplate & templ, PyTemplateParams & params)
 {
   PyTemplateGenResult result;
   if (self.HelperGenTemplate(templ.GetItemRef(), result.GetResultRef(), params.GetItemRef()))
@@ -914,10 +914,10 @@ BOOST_PYTHON_MODULE(sc)
   bp::class_<impl::PyTemplateItemValue>("ScTemplateItemValue", bp::no_init)
     ;
 
-  bp::class_<impl::PyTemplateGenParams>("ScTemplateGenParams", bp::init<>())
-    .def("Add", &impl::PyTemplateGenParams::Add)
-    .def("Get", &impl::PyTemplateGenParams::Get)
-    .def("IsEmpty", &impl::PyTemplateGenParams::IsEmpty)
+  bp::class_<impl::PyTemplateParams>("ScTemplateParams", bp::init<>())
+    .def("Add", &impl::PyTemplateParams::Add)
+    .def("Get", &impl::PyTemplateParams::Get)
+    .def("IsEmpty", &impl::PyTemplateParams::IsEmpty)
     ;
 
 
