@@ -38,6 +38,12 @@ public:
 
   bool operator == (ScAddr const & other) const;
   bool operator != (ScAddr const & other) const;
+
+  operator bool() const
+  {
+    return IsValid();
+  }
+
   ScRealAddr const & operator * () const;
   HashType Hash() const;
 

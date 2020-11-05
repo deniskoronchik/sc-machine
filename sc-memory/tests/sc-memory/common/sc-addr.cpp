@@ -14,3 +14,10 @@ TEST(ScAddrTest, Hash)
 
   EXPECT_EQ(addr1, addr2);
 }
+
+TEST(ScAddrTest, Empty)
+{
+  ScAddr addr;
+  EXPECT_FALSE(addr.IsValid());
+  EXPECT_FALSE(addr);
+}
