@@ -10,6 +10,7 @@
 #include "sc_type.hpp"
 #include "sc_utils.hpp"
 
+#include <unordered_map>
 
 #define SC_REPL(x) (char const *)(x)
 
@@ -218,16 +219,20 @@ public:
     return *this;
   }
 
+  SC_DEPRECATED(0.7.0, "Please use ScTemplateParams::Get(std::string const & varIdtf) const")
   _SC_EXTERN bool Get(std::string const & varIdtf, ScAddr & outResult) const
+  {
+    outResult = Get(varIdtf);
+    return outResult.IsValid();
+  }
+
+  _SC_EXTERN ScAddr Get(std::string const & varIdtf) const
   {
     auto const it = m_values.find(varIdtf);
     if (it != m_values.end())
-    {
-      outResult = it->second;
-      return true;
-    }
+      return it->second;
 
-    return false;
+    return {};
   }
 
   _SC_EXTERN bool IsEmpty() const
@@ -281,7 +286,7 @@ public:
 
 
 public:
-  ScTemplate(ScTemplate const & other) = delete;
+  using ReplacementsMap = std::unordered_map<std::string, size_t>;
   ScTemplate & operator = (ScTemplate const & other) = delete;
 
   using ReplacementsMap = std::map<std::string, size_t>;

@@ -10,17 +10,19 @@ There are list of available classes to work with templates:
 ## ScTemplate
 Class to work with templates in c++. Before reading this paragraph you need to read common [information about types](el_types.md).
 
-Let use `f` symbols for constant parameter of template. Let use `a` symbol for a variable parameter of template. Then template to search all output edges from specified sc-element will be a triple:
-* where first element is known `f`;
-* second and third elements need to be found `a`.
+Let use `f` symbols for fixed (constant) parameter of template. Let use `a` symbol for a assignable (variable) parameter of template. There are possible 3 types of simple templates:
 
-There are possible 3 types of simple templates:
 * `f_a_a` - template to find all outgoing edges from a specified sc-element;
 * `f_a_f` - template to find all edges between two specified sc-elements;
 * `a_a_f` - template to find all ingoing edges to a specified sc-element.
 
-There are some methods available for `ScTemplate` class:
-* `triple` - method that adds triple construction into template. There are some examples of using this function to produce simple templates:
+### Create template
+
+#### Manual
+
+Use `ScTemplateBuilder` to create `ScTemplate` directly from a code.
+
+`ScTemplateBuilder::Triple` - this function adds triple construction into template. There are some examples of using this function to produce simple templates:
 
 <table>
   <tr>
@@ -36,17 +38,19 @@ There are some methods available for `ScTemplate` class:
       <br/><strong>Equal C++ code</strong>
       <br/>
 <pre><code class="cpp hljs">
-ScTemplate templ;
-templ.Triple(
+ScTemplateBuilder builder;
+builder.Triple(
   param1,
-  ScType::EDGE_ACCESS_VAR_POS_PERM,
-  ScType::NODE_VAR
+  ScType::EdgeAccessVarPosPerm,
+  ScType::NodeVar
 );
 </code></pre>
-
       <br/>This triple template using to traverse output edges from specified sc-element.
-      <br/>There <code>param1</code> is a known <code>ScAddr</code> of sc-element. It must be a valid (use <code>ScAddr::IsValid</code> method to check). Where <code>_param2</code> and <code>_param3</code> are <code>ScType</code> for compare by search engine. When search engine will traverse output edges from <code>param1</code>. Construction will be added into traverse result, where output edge from <code>param1</code>, will suitable to specified type <code>_param2</code>, and type of target element of this edge will be sutable for a type <code>_param3</code>.
-      <br/>You can use any type of <code>_param3</code> (including edges) depending on construction you want to find. But <code>_param2</code> should be any type of variable edge.
+      <ul>
+       <li><code>param1</code> - is a known <code>ScAddr</code> of source sc-element. <i><b>Use <code>ScAddr</code> of any sc-element</b></i></li>
+       <li>second parameter - <code>ScType</code> of required outgoing edge. <i><b>Use only non constant edge types</b></i></li>
+       <li>third parameter - <code>ScType</code> of required target element. <i><b>Use any non constant type</b></i></li>
+      </ul>
     </td>
   </tr>
 
@@ -57,15 +61,19 @@ templ.Triple(
     <br/><strong>Equal C++ code</strong>
     <br/>
 <pre><code class="cpp hljs">
-ScTemplate templ;
-templ.Triple(
+ScTemplateBuilder builder;
+builder.Triple(
   param1,
-  ScType::EDGE_ACCESS_VAR_POS_PERM,
+  ScType::EdgeAccessVarPosPerm,
   param3
 );
 </code></pre>
-    <br/>This triple template using to find edge between <code>param1</code> and <code>param3</code>.
-    <br/>There are <code>param1</code> and <code>param3</code> a known <code>ScAddr</code> of sc-elements. Edge type <code>_param2</code> should be variable.
+      <br/>This triple template using to find edge between two sc-elements.
+      <ul>
+       <li><code>param1</code> - is a known <code>ScAddr</code> of source sc-element. <i><b>Use <code>ScAddr</code> of any sc-element</b></i></li>
+       <li>second parameter - <code>ScType</code> of required edge. <i><b>Use only non constant edge types</b></i></li>
+       <li><code>param3</code> - is a known <code>ScAddr</code> of target sc-element. <i><b>Use <code>ScAddr</code> of any sc-element</b></i></li>
+      </ul>
 
     </td>
   </tr>
@@ -77,76 +85,101 @@ templ.Triple(
     <br/><strong>Equal C++ code</strong>
     <br/>
 <pre><code class="cpp hljs">
-ScTemplate templ;
-templ.Triple(
-  ScType::NODE_VAR,
-  ScType::EDGE_ACCESS_VAR_POS_PERM,
+ScTemplateBuilder builder;
+builder.Triple(
+  ScType::NodeVar,
+  ScType::EdgeAccessVarPosPerm,
   param3
 );
 </code></pre>
-    <br/>This triple template using to traverse input edges from specified sc-element.
-    <br/>There <code>param3</code> is a known <code>ScAddr</code> of sc-element. You can use any type of <code>_param1</code> (including edges) depending on construction you want to find. But <code>_param2</code> should be any type of variable edge.
+      <br/>This triple template using to traverse ingoing edges to specified sc-element.
+      <ul>
+        <li>first parameter - <code>ScType</code> of required source element. <i><b>Use any non constant type</b></i></li>
+        <li>second parameter - <code>ScType</code> of required ingoing edge. <i><b>Use only non constant edge types</b></i></li>
+        <li><code>param3</code> - is a known <code>ScAddr</code> of target sc-element. <i><b>Use <code>ScAddr</code> of any sc-element</b></i></li>
+      </ul>
     </td>
   </tr>
 </table>
 
-When template search engine works, it tries to traverse graph by simple (triple) template in order they specified. For example we need to check if specified sc-element (`_device`) is included into `device` set and `device_enabled` set:
-
-<scg src="../../images/templates/template_example_2.gwf"></scg>
-
-**Code** that generates equal template
-```cpp
-ScAddr device_addr, device_enabled_addr;
-...
-
-ScTemplate templ;
-templ.Triple(
-  device_addr,    // sc-addr of device node
-  ScType::EDGE_ACCESS_VAR_POS_PERM,
-  ScType::NODE_VAR >> "_device_instance"
-);
-templ.Triple(
-  device_enabled_addr,    // sc-addr of device_enabled node
-  ScType::EDGE_ACCESS_VAR_POS_PERM,
-  "_device_instance"
-);
-```
-In code you can see a construction `ScType::NODE_VAR >> "_device_instance"` - this is a naming for a template element. It allows to set name for a specified sc-element in template, and use it many times in different triples. You can see, that in the second triple we use this name `"_device_instance"`. That means, that we need to place search result from a first triple into the second. So the second triple is a `f_a_f` style triple.
-
-So if you want to use the same element `_x` in different triples, and you doesn't know it `ScAddr`, then just use two main rules:
-* set name of this element in a first occurrence of this element in template triples. You need to use `>>` operator to do this (see code below, last element of first triple);
-* when you need to use named element in next triples, then just use it name instread of `ScType` or `ScAddr` (see code below, first element if second triple).
-
-**Example code with naming**
+It is possible to assign text name for elements in `ScTemplate`. Use `>>` operator for parameters in `ScTemplateBuilder::Triple` function. 
+These named sc-elements can be used in next triples instead of `ScAddr` for a known sc-elements. Search engine will substitue found sc-element as known.
+That allow to link a lot of triples into one big template. Example:
 
 ```cpp
-ScTemplateTempl;
-templ.Triple(
-  any_addr, // sc-addr of known sc-element
-  ScType::EDGE_ACCESS_VAR_POS_PERM,  // type of unknown edge
-  ScType::NODE_VAR >> "_x"  // type and name for an unknown sc-element
-);
-templ.Triple(
-  "_x",  // say that is the same element as the last on in a previous triple
-  ScType::EDGE_ACCESS_VAR_POS_PERM,  // type of unknown edge
-  ScType::NODE_VAR  // type of unknown sc-element
-);
+ScTemplateBuilder builder;
+builder.Triple(
+  addr,
+  ScType::EdgeAccessVarPosPerm >> "_edge",
+  ScType::NodeVar >> "_node");
+
+builder.Triple(
+  ScType::NodeVar >> "_attr",
+  ScType::EdgeAccessVarPosPerm,
+  "_edge");
+
+builder.Triple(
+  other_addr,
+  ScType::EdgeAccessVarPosPerm,
+  "_node");
+
+ScTemplatePtr templ = builder.Template();
 ```
 
-Also you can generate templates using [SCs-code](/other/scs.md). Example code:
+С++ code above describes this template:
+<scg src="../../images/templates/template_named_param_example.gwf"></scg>
+
+The same template can be done with `ScTemplateBuilder::TripleWithRelation` function. This fuction call equals to two calls of `Triple` functions.
 
 ```cpp
-ScTemplate templ; 
-char const * data = 
-  "_device_instance"
-  "  _<- device;"
-  "  _<- device_enabled;;";
-ctx.HelperBuildTemplate(templ, data);
+ScTemplateBuilder builder;
+
+/**
+ * builder.Triple(
+ * addr,
+ * ScType::EdgeAccessVarPosPerm >> "_edge",
+ * ScType::NodeVar >> "_node");
+ *
+ * builder.Triple(
+ * ScType::NodeVar >> "_attr",
+ * ScType::EdgeAccessVarPosPerm,
+ * "_edge");
+ *   
+ * Replace these two calls with one
+ */
+
+builder.TripleWithRelation(
+  addr,
+  ScType::EdgeAccessVarPosPerm,
+  ScType::NodeVar >> "_node",
+  ScType::EdgeAccessVarPosPerm,
+  ScType::NodeVar >> "_attr");
+
+builder.Triple(
+  other_addr,
+  ScType::EdgeAccessVarPosPerm,
+  "_node");
+
+ScTemplatePtr templ = builder.Template();
 ```
 
-During template building all constants will be resolved by their system identifier (in example: `device`, `device_enabled`), so in result `templ` will be contain template:
+#### With SCs-text
 
-<scg src="../../images/templates/template_example_2.gwf"></scg>
+Another option to create template - is to use [SCs-text](../other/scs.md). Use `ScTemplateSCsBuilder` class for that.
+
+```cpp
+std::string const scs_text = "addr _-> _attr:: _node;; _node _<- other_addr;;";
+
+ScTemplateBuilderSCs builder(scs_text);
+ScTemplatePtr template = builder.Template();
+```
+
+!!! note
+    All system identifiers will be resolved as fixed (constant) sc-elements (`addr` and `other_addr` in exampe above)
+
+#### From SC-memory
+
+
 
 ## Search
 
