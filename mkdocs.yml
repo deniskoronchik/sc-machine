@@ -2,11 +2,13 @@ site_name: SC-machine
 
 extra_css:
   - _assets/main.css
+  
 extra_javascript:
   - _assets/scg.min.js
   - _assets/main.js
+  - https://unpkg.com/mermaid/dist/mermaid.min.js
 
-pages:
+nav:
   - Home: index.md
   - Build:
     - Build on Linux: build/linux-build.md
@@ -19,16 +21,15 @@ pages:
   - Common:
     - Element types: cpp/el_types.md
     - Configuration files: other/config.md
-    - Sctp-protocol: net/sctp.md
     - SCs language: other/scs.md
   - API:
     - Meta programming: cpp/cpp-meta.md
     - Agents: cpp/kpm.md
     - Template: cpp/templates.md
     - Common: cpp/common.md
-  - Http:
-      - Common: http/index.md
-      - WebSocket: http/websocket.md
+  - Network:
+      - Common: net/index.md
+      - Sctp: net/sctp.md
   - Tools:
       - Builder: tools/kb_builder.md
       - Web: tools/web.md
@@ -41,6 +42,16 @@ theme: material
 markdown_extensions:
   - markdown_include.include
   - admonition
-  - codehilite
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.tabbed
+  - pymdownx.superfences:
+    # make exceptions to highlighting of code:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_div_format
+
+plugins:
+    - search
+    - mermaid2

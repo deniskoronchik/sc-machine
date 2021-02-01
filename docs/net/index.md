@@ -1,4 +1,4 @@
-# HTTP service
+# Network service
 
 This service implement HTTP endpoint for knowledge base.
 It runs as an extension module of sc-memory. There are list of provided API's:

@@ -67,7 +67,7 @@ For each pull request you should do:
 
   * update `docs/changelog.md` file according to your commits
   * ensure prepare updates for documentation
-  * cover new functionality [by tests](test.md)
+  * cover new functionality by tests
   * your code should be written according to a [codestyle](codestyle.md)
 
 ***

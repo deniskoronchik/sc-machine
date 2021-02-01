@@ -27,7 +27,14 @@ Each element of triple could be:
 
 Let's show how to define simple template below with C++ code.
 
-<scg src="../../images/templates/example_template_device.gwf"></scg>
+=== "SCg"
+    <scg src="../../images/templates/example_template_device.gwf"></scg>
+
+=== "SCs"
+    ```scs
+    device _-> _device_class;;
+    _device_class _-> _device_instance;;
+    ```
 
 ```cpp
 ScAddr const deviceAddr = ...;
@@ -89,7 +96,19 @@ It is possible to use parameters in template search/generation. Please use `ScTe
 
 Search engine traverses sc-memory to find all contructions that correspond to template. Let's assume that we need to check if specified sc-element (`_device`) is included into `device` set and `device_enabled` set:
 
-<scg src="../../images/templates/template_example_2.gwf"></scg>
+=== "SCg"
+
+    <scg src="../../images/templates/template_example_2.gwf"></scg>
+
+=== "SCs"
+
+    ```scs
+    device _-> _device_instance;;
+    device_enabled _-> _device_instance;;
+    sc_node_class 
+      -> device;
+      -> device_enabled;;
+    ```
 
 **Code** generates equal template:
 
