@@ -32,6 +32,7 @@ nav:
       - Sctp: net/sctp.md
   - Tools:
       - Builder: tools/kb_builder.md
+      - Server: tools/sc-server.md
       - Web: tools/web.md
   - License: license.md
   - Changelog: changelog.md

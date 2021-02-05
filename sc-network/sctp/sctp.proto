@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package sctp;
+
+// Authorization
+message AuthorizationRequest {
+  string login = 2;
+  string password_hash = 3;
+}
+
+message AuthorizationResponse {
+  enum Status {
+    Failed = 0;
+    Success = 1;
+  }
+  Status status = 2;
+  int32 clientID = 3;
+}
+
+// CreateElements
+message CreateElementsRequest {
+
+  message Node {
+    uint32 type = 1;
+  }
+
+  message Edge {
+    message Element {
+      bool is_addr = 1;
+      uint32 value = 2;
+    }
+
+    uint32 type = 1;
+    Element source = 2;
+    Element target = 3;
+  }
+
+  message Link {
+    uint32 type = 1;
+    oneof content_oneof {
+      int64 int_value = 2;
+      double double_value = 3;
+      string string_value = 4;
+      bytes binary_value = 5;
+    }
+  }
+
+  message Element {
+    oneof element_oneof {
+      Node node = 1;
+      Edge edge = 2;
+      Link link = 3;
+    }
+  }
+
+  repeated Element elements = 1;
+}
+
+message CreateElementsResponse {
+}
+
+// Common headers
+message Request {
+  uint32 id = 1; // request id
+  uint64 timestamp = 2; // unix time request timestamp (milliseconds)
+
+  oneof request_oneof {
+    AuthorizationRequest auth = 3;
+    CreateElementsRequest create = 4;
+  }
+}
+
+message Response {
+  uint32 id = 1; // request id
+  uint64 teimstamp = 2; // unix time response timestamp (milliseconds)
+
+  oneof response_oneof {
+    AuthorizationResponse atuh = 3;
+    CreateElementsResponse create = 4;
+  }
+}

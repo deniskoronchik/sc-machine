@@ -20,7 +20,7 @@ target_include_directories(sc-server
   PRIVATE ${SC_MEMORY_SRC} 
   PRIVATE ${GLIB2_INCLUDE_DIRS}
   )
-target_link_libraries(sc-server sc-memory ${BOOST_LIBS_LIST})
+target_link_libraries(sc-server sc-memory ${BOOST_LIBS_LIST} sctp)
 
 add_dependencies(sc-server
   sc-kpm

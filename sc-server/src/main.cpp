@@ -1,85 +1,82 @@
-/*
- * This source file is part of an OSTIS project. For the latest info, see http://ostis.net
- * Distributed under the MIT License
- * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
- */
+#include "server.hpp"
+#include "server_config.hpp"
 
 #include <boost/program_options.hpp>
 
-#include <iostream>
-
 #include <sc-memory/sc_debug.hpp>
-#include <sc-memory/sc_memory.hpp>
+#include <sc-memory/utils/sc_log.hpp>
 #include <sc-memory/utils/sc_signal_handler.hpp>
-
-#include <atomic>
-#include <thread>
 
 int main(int argc, char *argv[]) try
 {
-  boost::program_options::options_description options_description("Builder usage");
-  options_description.add_options()
-      ("help", "Display this message")
-      ("ext-path,e", boost::program_options::value<std::string>(), "Path to directory with sc-memory extensions")
-      ("repo-path,r", boost::program_options::value<std::string>(), "Path to repository")
-      ("verbose,v", "Flag to don't save sc-memory state on exit")
-      ("clear,c", "Flag to clear sc-memory on start")
-      ("config-file,i", boost::program_options::value<std::string>(), "Path to configuration file");
-
-  boost::program_options::variables_map vm;
-  boost::program_options::store(boost::program_options::command_line_parser(argc, argv).options(options_description).run(), vm);
-  boost::program_options::notify(vm);
-
+  namespace bpo = boost::program_options;
   std::string configFile;
-  if (vm.count("config-file"))
-    configFile = vm["config-file"].as<std::string>();
 
-  std::string extPath;
-  if (vm.count("ext-path"))
-    extPath = vm["ext-path"].as<std::string>();
-
-  std::string repoPath;
-  if (vm.count("repo-path"))
-    repoPath = vm["repo-path"].as<std::string>();
-
-  bool saveState = true;
-  if (vm.count("verbose"))
-    saveState = false;
-
-  bool clear = false;
-  if (vm.count("clear"))
-    clear = true;
-
-  if (vm.count("help"))
+  // command-line
   {
-    std::cout << options_description;
+    bpo::options_description options_description("sc-server usage");
+    options_description.add_options()
+        ("help", "Display this message")
+        ("config,c",bpo::value<std::string>(), "Path to configuration file");
+
+    bpo::variables_map vm;
+    bpo::store(bpo::command_line_parser(argc, argv).options(options_description).run(), vm);
+    bpo::notify(vm);
+
+    if (vm.count("config"))
+      configFile = vm["config"].as<std::string>();
+    else
+      return 0;
+
+    if (vm.count("help"))
+    {
+      std::cout << options_description;
+      return 0;
+    }
+  }
+
+  // configuration file
+
+  bpo::options_description opt_descr("sc-server config");
+  opt_descr.add_options()
+      ("storage.config_path", bpo::value<std::string>()->default_value(""),
+       "Path to sc-storage configuration file")
+      ("storage.ext_path", bpo::value<std::string>()->default_value("extensions"),
+       "Path to sc-memory extensions")
+      ("storage.repo_path", bpo::value<std::string>()->default_value("repo"),
+       "Path to built knowledge base")
+      ("storage.clear", bpo::value<bool>()->default_value(false),
+       "Flag to clear sc-memory on start");
+
+  bpo::variables_map vm;
+  try
+  {
+    SC_LOG_COLOR(utils::ScLog::Type::Info,
+                 "Load configuration from file: " << configFile,
+                 ScConsole::Color::Green);
+
+    bpo::store(bpo::parse_config_file(configFile.c_str(), opt_descr), vm);
+    bpo::notify(vm);
+  }
+  catch (const bpo::error &ex)
+  {
+    SC_LOG_ERROR(ex.what());
     return 0;
   }
 
-  std::atomic_bool isRun = { true };
+  std::unique_ptr<ServerConfig> config = std::make_unique<ServerConfig>(std::move(vm));
+  std::unique_ptr<Server> server = std::make_unique<Server>(std::move(config));
+
   utils::ScSignalHandler::Initialize();
-  utils::ScSignalHandler::m_onTerminate = [&isRun]()
+  utils::ScSignalHandler::m_onTerminate = [&server]()
   {
-    isRun = false;
+    SC_LOG_COLOR(utils::ScLog::Type::Info,
+                 "Request to stop server by user",
+                 ScConsole::Color::Blue);
+    server->Stop();
   };
 
-  sc_memory_params params;
-  sc_memory_params_clear(&params);
-
-  params.clear = clear ? SC_TRUE : SC_FALSE;
-  params.config_file = configFile.c_str();
-  params.enabled_exts = nullptr;
-  params.ext_path = extPath.c_str();
-  params.repo_path = repoPath.c_str();
-
-  ScMemory::Initialize(params);
-
-  while (isRun)
-  {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-  }
-
-  ScMemory::Shutdown(saveState);
+  server->Run();
 
   return EXIT_SUCCESS; // : EXIT_FAILURE;
 }

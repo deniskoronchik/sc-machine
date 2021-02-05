@@ -11,7 +11,6 @@ set(SC_MACHINE_THIRDPARTY_PATH "${SC_MACHINE_ROOT}/thirdparty")
 
 option (SC_AUTO_TEST "Flag to build for automation testing" OFF)
 option (SC_KPM_SCP "Flag to build SCP module" OFF)
-option (SC_BUILD_SCTP "Flag to turn on/off sctp protocol support" OFF)
 
 set(SC_USE_SANITIZER "none" CACHE STRING "Build with specified sanitizer")
 set_property(CACHE SC_USE_SANITIZER PROPERTY STRINGS none address memory)
@@ -196,7 +195,8 @@ elseif (${WIN32})
 
 endif(${APPLE})
 
-configure_file(${CMAKE_CURRENT_LIST_DIR}/config/config.ini.in ${CMAKE_CURRENT_LIST_DIR}/bin/config.ini)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/config/sc-storage.ini.in ${CMAKE_CURRENT_LIST_DIR}/bin/sc-storage.ini)
+configure_file(${CMAKE_CURRENT_LIST_DIR}/config/sc-server.ini.in ${CMAKE_CURRENT_LIST_DIR}/bin/sc-server.ini)
 
 if (BUILD_TESTING)
     include (cmake/tests.cmake)
@@ -209,6 +209,4 @@ add_subdirectory(${SC_MACHINE_ROOT}/sc-kpm)
 add_subdirectory(${SC_MACHINE_ROOT}/sc-server)
 add_subdirectory(${SC_MACHINE_ROOT}/tools)
 
-if (${SC_BUILD_SCTP})
-    add_subdirectory(${SC_MACHINE_ROOT}/sc-network)
-endif()
+add_subdirectory(${SC_MACHINE_ROOT}/sc-network)

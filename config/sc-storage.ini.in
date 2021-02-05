@@ -1,0 +1,6 @@
+##### sc-memory
+[memory]
+max_loaded_segments = 1000
+
+[kpm]
+max_threads = 2

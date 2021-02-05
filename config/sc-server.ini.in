@@ -1,0 +1,8 @@
+[storage]
+config_path = ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sc-storage.ini
+# sc-machine/bin/extensions
+ext_path = ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/extensions
+# Default: `repo`
+repo_path = ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/repo
+# flag to clear sc-memory on start. Default: `false`
+clear = true
