@@ -51,9 +51,7 @@ int main(int argc, char *argv[]) try
   bpo::variables_map vm;
   try
   {
-    SC_LOG_COLOR(utils::ScLog::Type::Info,
-                 "Load configuration from file: " << configFile,
-                 ScConsole::Color::Green);
+    SC_LOG_INFO_COLOR("Load configuration from file: " << configFile, ScConsole::Color::Green);
 
     bpo::store(bpo::parse_config_file(configFile.c_str(), opt_descr), vm);
     bpo::notify(vm);
@@ -70,9 +68,7 @@ int main(int argc, char *argv[]) try
   utils::ScSignalHandler::Initialize();
   utils::ScSignalHandler::m_onTerminate = [&server]()
   {
-    SC_LOG_COLOR(utils::ScLog::Type::Info,
-                 "Request to stop server by user",
-                 ScConsole::Color::Blue);
+    SC_LOG_INFO_COLOR("Request to stop server by user", ScConsole::Color::Blue);
     server->Stop();
   };
 

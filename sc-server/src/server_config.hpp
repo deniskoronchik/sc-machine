@@ -18,6 +18,7 @@ public:
   std::string StorageRepoPath() const;
   bool IsStorageClear() const;
 
+  void LogConfig();
 
 private:
   template <typename Type>

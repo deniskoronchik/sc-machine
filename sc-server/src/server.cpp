@@ -19,6 +19,8 @@ Server::~Server()
 void Server::Run()
 {
   m_isRunning = true;
+  SC_LOG_INFO_COLOR("Run server with configuration: ", ScConsole::Color::Green);
+  m_config->LogConfig();
 
   StartStorage();
 
@@ -37,9 +39,7 @@ void Server::Stop()
 
 void Server::StartStorage()
 {
-  SC_LOG_COLOR(utils::ScLog::Type::Info,
-               "Initialize sc-memory",
-               ScConsole::Color::Green);
+  SC_LOG_INFO_COLOR("Initialize sc-memory", ScConsole::Color::Green);
 
   std::string const configPath = m_config->StorageConfigPath();
   std::string const extPath = m_config->StorageExtPath();
@@ -59,9 +59,7 @@ void Server::StartStorage()
 
 void Server::StopStorage()
 {
-  SC_LOG_COLOR(utils::ScLog::Type::Info,
-               "Shutdown sc-memory",
-               ScConsole::Color::Green);
+  SC_LOG_INFO_COLOR("Shutdown sc-memory", ScConsole::Color::Green);
 
   ScMemory::Shutdown(true);
 }
