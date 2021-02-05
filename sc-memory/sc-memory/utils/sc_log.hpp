@@ -50,13 +50,13 @@ private:
 
 
 #define SC_LOG_COLOR(__type, __msg, __color) \
-{ std::stringstream ss; ss << __msg; ::utils::ScLog::GetInstance()->Message(__type, ss.str(), __color); }
+{ std::stringstream __ss; __ss << __msg; ::utils::ScLog::GetInstance()->Message(__type, __ss.str(), __color); }
 
 #define SC_LOG(__type, __msg) SC_LOG_COLOR(__type, __msg, ScConsole::Color::White)
 
 
 #define SC_LOG_DEBUG(__msg) { SC_LOG_COLOR(::utils::ScLog::Type::Debug, __msg, ScConsole::Color::LightBlue) }
-#define SC_LOG_INFO(__msg) { SC_LOG_COLOR(::utils::ScLog::Type::Info, __msg, ScConsole::Color::Grey) }
+#define SC_LOG_INFO(__msg) { SC_LOG_COLOR(::utils::ScLog::Type::Info, __msg, ScConsole::Color::Reset) }
 #define SC_LOG_WARNING(__msg) { SC_LOG_COLOR(::utils::ScLog::Type::Warning, __msg, ScConsole::Color::Yellow) }
 #define SC_LOG_ERROR(__msg) { SC_LOG_COLOR(::utils::ScLog::Type::Error, __msg, ScConsole::Color::Red) }
 #define SC_LOG_INFO_COLOR(__msg, __color) { SC_LOG_COLOR(::utils::ScLog::Type::Info, __msg, __color) }
