@@ -4,6 +4,10 @@
 #include <memory>
 
 class ServerConfig;
+namespace impl
+{
+class Server;
+} // namespace impl
 
 class Server final
 {
@@ -12,7 +16,6 @@ public:
   ~Server();
 
   void Run();
-  void Stop();
 
 private:
   void StartStorage();
@@ -20,5 +23,5 @@ private:
 
 private:
   std::unique_ptr<ServerConfig> m_config;
-  std::atomic_bool m_isRunning = { true };
+  std::unique_ptr<impl::Server> m_impl;
 };

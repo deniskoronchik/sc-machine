@@ -25,16 +25,17 @@ sequenceDiagram
     %% handshake >>>
     Client->>Server: Handshake
     activate Server
-    Note right of Client: Resuests preffered underlying format
     
     Server-->>Client: Response
     deactivate Server
+    Note right of Client: Resturns random string
 
     %% <<< handshake
 
     %% auth >>>
     Client->>Server: Authorization
     activate Server
+    Note right of Client: Sends string wrapped with password
 
     Server->>Users: Check User
     activate Users

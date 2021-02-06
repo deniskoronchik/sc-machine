@@ -2,10 +2,23 @@ syntax = "proto3";
 
 package sctp;
 
+// Packet header
+message PacketHeader {
+  fixed32 watermark = 1;   // watermark = "sctp"
+  fixed32 size = 2;        // size of package in bytes
+}
+
 // Authorization
+message HandshakeRequest {
+  string login = 1;
+}
+
+message HandshakeResponse {
+  string hash = 1;
+}
+
 message AuthorizationRequest {
-  string login = 2;
-  string password_hash = 3;
+  string hash = 1;
 }
 
 message AuthorizationResponse {
@@ -65,8 +78,9 @@ message Request {
   uint64 timestamp = 2; // unix time request timestamp (milliseconds)
 
   oneof request_oneof {
-    AuthorizationRequest auth = 3;
-    CreateElementsRequest create = 4;
+    HandshakeRequest handshake = 21;
+    AuthorizationRequest auth = 22;
+    CreateElementsRequest create = 23;
   }
 }
 
@@ -75,7 +89,8 @@ message Response {
   uint64 teimstamp = 2; // unix time response timestamp (milliseconds)
 
   oneof response_oneof {
-    AuthorizationResponse atuh = 3;
-    CreateElementsResponse create = 4;
+    HandshakeResponse handshake = 21;
+    AuthorizationResponse atuh = 22;
+    CreateElementsResponse create = 23;
   }
 }

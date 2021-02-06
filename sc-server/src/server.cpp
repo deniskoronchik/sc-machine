@@ -1,6 +1,9 @@
 #include "server.hpp"
 
+#include "impl/server.hpp"
 #include "server_config.hpp"
+
+#include <boost/asio.hpp>
 
 #include <sc-memory/sc_memory.hpp>
 #include <sc-memory/utils/sc_log.hpp>
@@ -18,23 +21,19 @@ Server::~Server()
 
 void Server::Run()
 {
-  m_isRunning = true;
   SC_LOG_INFO_COLOR("Run server with configuration: ", ScConsole::Color::Green);
   m_config->LogConfig();
 
   StartStorage();
 
-  while (m_isRunning)
-  {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-  }
+  m_impl = std::make_unique<impl::Server>(
+        m_config->ServerHost(),
+        m_config->ServerPort(),
+        m_config->ServerThreads());
+
+  m_impl->Run();
 
   StopStorage();
-}
-
-void Server::Stop()
-{
-  m_isRunning = false;
 }
 
 void Server::StartStorage()

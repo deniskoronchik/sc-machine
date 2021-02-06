@@ -10,6 +10,10 @@ public:
   std::string const kStorageExtPath = "storage.ext_path";
   std::string const kStorageRepoPath = "storage.repo_path";
 
+  std::string const kServerHost = "server.host";
+  std::string const kServerPort = "server.port";
+  std::string const kServerThreads = "server.threads";
+
 public:
   explicit ServerConfig(boost::program_options::variables_map && vm);
 
@@ -18,16 +22,18 @@ public:
   std::string StorageRepoPath() const;
   bool IsStorageClear() const;
 
+  std::string ServerHost() const;
+  uint16_t ServerPort() const;
+  uint16_t ServerThreads() const;
+
   void LogConfig();
 
 private:
   template <typename Type>
-  Type GetValue(std::string const & key, Type defaultValue) const
+  Type GetValue(std::string const & key) const
   {
-    if (m_varMap.count(key))
-      return m_varMap[key].as<Type>();
-
-    return defaultValue;
+    assert(m_varMap.count(key) > 0);
+    return m_varMap[key].as<Type>();
   }
 
 private:

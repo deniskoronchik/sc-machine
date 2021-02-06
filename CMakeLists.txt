@@ -79,11 +79,15 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 message ("CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
 message ("CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
+set(Boost_USE_STATIC_LIBS ON)
+find_package(Boost 1.67 REQUIRED COMPONENTS 
+    system
+    filesystem
+    program_options
+    thread)
+
 # find dependencies
 if (${APPLE})
-    set(Boost_USE_STATIC_LIBS ON)
-    find_package(Boost 1.67 REQUIRED COMPONENTS system filesystem program_options)
-
     find_package(PkgConfig REQUIRED)
     pkg_search_module(GLIB2 REQUIRED glib-2.0)
     pkg_search_module(GLIB2_MODULE REQUIRED gmodule-2.0)

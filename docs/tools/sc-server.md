@@ -12,12 +12,12 @@ repo_path = <Path to knowledge base>
 # flag to clear sc-memory on start. Default: `false`
 clear = <true|false> 
 
-[network]
+[server]
 # default `localhost`
 host = <address of host>
 # default `55770`
 port = <port number>
-# number of threads to process client connections. Default `-1` - number of CPU cores
+# number of threads to process client connections. Default `0` - number of CPU cores
 threads = <number>
 
 ```

@@ -6,3 +6,11 @@ ext_path = ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/extensions
 repo_path = ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/repo
 # flag to clear sc-memory on start. Default: `false`
 clear = true
+
+[server]
+# default `127.0.0.1`
+host = 127.0.0.1
+# default `55770`
+port = 55770
+# number of threads to process client connections. Default `0` - number of CPU cores
+threads = 2
