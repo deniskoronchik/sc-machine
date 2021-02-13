@@ -83,7 +83,7 @@ void Server::HandleAccept(SessionPtr newSession, boost::system::error_code const
   if (!error)
   {
     newSession->Start();
-    SC_LOG_INFO_COLOR("New connection. Session ID = " << newSession->ID(),
+    SC_LOG_INFO_COLOR("New connection: Session " << newSession->ID(),
                       ScConsole::Color::Green);
   }
 

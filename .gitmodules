@@ -5,3 +5,6 @@
 [submodule "thirdparty/benchmark"]
 	path = thirdparty/benchmark
 	url = https://github.com/google/benchmark.git
+[submodule "thirdparty/mbedtls"]
+	path = thirdparty/mbedtls
+	url = https://github.com/ARMmbed/mbedtls.git

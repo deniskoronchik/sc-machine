@@ -43,7 +43,16 @@ void Session::HandleRead(boost::system::error_code const & error, size_t bytesTr
 {
   if (error)
   {
-    SC_LOG_ERROR(MakeMessage(error.message()));
+    if (error == boost::asio::error::eof)
+    {
+      SC_LOG_INFO_COLOR(MakeMessage("Disconnected"),
+                        ScConsole::Color::Green);
+    }
+    else
+    {
+      SC_LOG_ERROR(MakeMessage(error.message()));
+    }
+
     return;
   }
 
