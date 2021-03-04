@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\nsctp.proto\x12\x04sctp\"/\n\x0cPacketHeader\x12\x11\n\twatermark\x18\x01 \x01(\x07\x12\x0c\n\x04size\x18\x02 \x01(\x07\"<\n\x14\x41uthorizationRequest\x12\r\n\x05login\x18\x02 \x01(\t\x12\x15\n\rpassword_hash\x18\x03 \x01(\t\"\x80\x01\n\x15\x41uthorizationResponse\x12\x32\n\x06status\x18\x02 \x01(\x0e\x32\".sctp.AuthorizationResponse.Status\x12\x10\n\x08\x63lientID\x18\x03 \x01(\x05\"!\n\x06Status\x12\n\n\x06\x46\x61iled\x10\x00\x12\x0b\n\x07Success\x10\x01\"\xd2\x04\n\x15\x43reateElementsRequest\x12\x35\n\x08\x65lements\x18\x01 \x03(\x0b\x32#.sctp.CreateElementsRequest.Element\x1a\x14\n\x04Node\x12\x0c\n\x04type\x18\x01 \x01(\r\x1a\xb3\x01\n\x04\x45\x64ge\x12\x0c\n\x04type\x18\x01 \x01(\r\x12\x38\n\x06source\x18\x02 \x01(\x0b\x32(.sctp.CreateElementsRequest.Edge.Element\x12\x38\n\x06target\x18\x03 \x01(\x0b\x32(.sctp.CreateElementsRequest.Edge.Element\x1a)\n\x07\x45lement\x12\x0f\n\x07is_addr\x18\x01 \x01(\x08\x12\r\n\x05value\x18\x02 \x01(\r\x1a\x82\x01\n\x04Link\x12\x0c\n\x04type\x18\x01 \x01(\r\x12\x13\n\tint_value\x18\x02 \x01(\x03H\x00\x12\x16\n\x0c\x64ouble_value\x18\x03 \x01(\x01H\x00\x12\x16\n\x0cstring_value\x18\x04 \x01(\tH\x00\x12\x16\n\x0c\x62inary_value\x18\x05 \x01(\x0cH\x00\x42\x0f\n\rcontent_oneof\x1a\xb0\x01\n\x07\x45lement\x12\x30\n\x04node\x18\x01 \x01(\x0b\x32 .sctp.CreateElementsRequest.NodeH\x00\x12\x30\n\x04\x65\x64ge\x18\x02 \x01(\x0b\x32 .sctp.CreateElementsRequest.EdgeH\x00\x12\x30\n\x04link\x18\x03 \x01(\x0b\x32 .sctp.CreateElementsRequest.LinkH\x00\x42\x0f\n\relement_oneof\"\x18\n\x16\x43reateElementsResponse\"\x94\x01\n\x07Request\x12\n\n\x02id\x18\x01 \x01(\r\x12\x11\n\ttimestamp\x18\x02 \x01(\x04\x12*\n\x04\x61uth\x18\x03 \x01(\x0b\x32\x1a.sctp.AuthorizationRequestH\x00\x12-\n\x06\x63reate\x18\x04 \x01(\x0b\x32\x1b.sctp.CreateElementsRequestH\x00\x42\x0f\n\rrequest_oneof\"\x98\x01\n\x08Response\x12\n\n\x02id\x18\x01 \x01(\r\x12\x11\n\tteimstamp\x18\x02 \x01(\x04\x12+\n\x04\x61tuh\x18\x03 \x01(\x0b\x32\x1b.sctp.AuthorizationResponseH\x00\x12.\n\x06\x63reate\x18\x04 \x01(\x0b\x32\x1c.sctp.CreateElementsResponseH\x00\x42\x10\n\x0eresponse_oneofb\x06proto3'
+  serialized_pb=b'\n\nsctp.proto\x12\x04sctp\"/\n\x0cPacketHeader\x12\x11\n\twatermark\x18\x01 \x01(\x07\x12\x0c\n\x04size\x18\x02 \x01(\x07\"2\n\x10HandshakeRequest\x12\r\n\x05login\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\x05\"!\n\x11HandshakeResponse\x12\x0c\n\x04hash\x18\x01 \x01(\t\"$\n\x14\x41uthorizationRequest\x12\x0c\n\x04hash\x18\x01 \x01(\t\"\x80\x01\n\x15\x41uthorizationResponse\x12\x32\n\x06status\x18\x02 \x01(\x0e\x32\".sctp.AuthorizationResponse.Status\x12\x10\n\x08\x63lientID\x18\x03 \x01(\x05\"!\n\x06Status\x12\n\n\x06\x46\x61iled\x10\x00\x12\x0b\n\x07Success\x10\x01\"\xd2\x04\n\x15\x43reateElementsRequest\x12\x35\n\x08\x65lements\x18\x01 \x03(\x0b\x32#.sctp.CreateElementsRequest.Element\x1a\x14\n\x04Node\x12\x0c\n\x04type\x18\x01 \x01(\r\x1a\xb3\x01\n\x04\x45\x64ge\x12\x0c\n\x04type\x18\x01 \x01(\r\x12\x38\n\x06source\x18\x02 \x01(\x0b\x32(.sctp.CreateElementsRequest.Edge.Element\x12\x38\n\x06target\x18\x03 \x01(\x0b\x32(.sctp.CreateElementsRequest.Edge.Element\x1a)\n\x07\x45lement\x12\x0f\n\x07is_addr\x18\x01 \x01(\x08\x12\r\n\x05value\x18\x02 \x01(\r\x1a\x82\x01\n\x04Link\x12\x0c\n\x04type\x18\x01 \x01(\r\x12\x13\n\tint_value\x18\x02 \x01(\x03H\x00\x12\x16\n\x0c\x64ouble_value\x18\x03 \x01(\x01H\x00\x12\x16\n\x0cstring_value\x18\x04 \x01(\tH\x00\x12\x16\n\x0c\x62inary_value\x18\x05 \x01(\x0cH\x00\x42\x0f\n\rcontent_oneof\x1a\xb0\x01\n\x07\x45lement\x12\x30\n\x04node\x18\x01 \x01(\x0b\x32 .sctp.CreateElementsRequest.NodeH\x00\x12\x30\n\x04\x65\x64ge\x18\x02 \x01(\x0b\x32 .sctp.CreateElementsRequest.EdgeH\x00\x12\x30\n\x04link\x18\x03 \x01(\x0b\x32 .sctp.CreateElementsRequest.LinkH\x00\x42\x0f\n\relement_oneof\"\x18\n\x16\x43reateElementsResponse\"\xc1\x01\n\x07Request\x12\n\n\x02id\x18\x01 \x01(\r\x12\x11\n\ttimestamp\x18\x02 \x01(\x04\x12+\n\thandshake\x18\x15 \x01(\x0b\x32\x16.sctp.HandshakeRequestH\x00\x12*\n\x04\x61uth\x18\x16 \x01(\x0b\x32\x1a.sctp.AuthorizationRequestH\x00\x12-\n\x06\x63reate\x18\x17 \x01(\x0b\x32\x1b.sctp.CreateElementsRequestH\x00\x42\x0f\n\rrequest_oneof\"\xc6\x01\n\x08Response\x12\n\n\x02id\x18\x01 \x01(\r\x12\x11\n\tteimstamp\x18\x02 \x01(\x04\x12,\n\thandshake\x18\x15 \x01(\x0b\x32\x17.sctp.HandshakeResponseH\x00\x12+\n\x04\x61tuh\x18\x16 \x01(\x0b\x32\x1b.sctp.AuthorizationResponseH\x00\x12.\n\x06\x63reate\x18\x17 \x01(\x0b\x32\x1c.sctp.CreateElementsResponseH\x00\x42\x10\n\x0eresponse_oneofb\x06proto3'
 )
 
 
@@ -44,8 +44,8 @@ _AUTHORIZATIONRESPONSE_STATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=227,
-  serialized_end=260,
+  serialized_start=290,
+  serialized_end=323,
 )
 _sym_db.RegisterEnumDescriptor(_AUTHORIZATIONRESPONSE_STATUS)
 
@@ -89,25 +89,25 @@ _PACKETHEADER = _descriptor.Descriptor(
 )
 
 
-_AUTHORIZATIONREQUEST = _descriptor.Descriptor(
-  name='AuthorizationRequest',
-  full_name='sctp.AuthorizationRequest',
+_HANDSHAKEREQUEST = _descriptor.Descriptor(
+  name='HandshakeRequest',
+  full_name='sctp.HandshakeRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='login', full_name='sctp.AuthorizationRequest.login', index=0,
-      number=2, type=9, cpp_type=9, label=1,
+      name='login', full_name='sctp.HandshakeRequest.login', index=0,
+      number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='password_hash', full_name='sctp.AuthorizationRequest.password_hash', index=1,
-      number=3, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='version', full_name='sctp.HandshakeRequest.version', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -124,7 +124,71 @@ _AUTHORIZATIONREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=69,
-  serialized_end=129,
+  serialized_end=119,
+)
+
+
+_HANDSHAKERESPONSE = _descriptor.Descriptor(
+  name='HandshakeResponse',
+  full_name='sctp.HandshakeResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='hash', full_name='sctp.HandshakeResponse.hash', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=121,
+  serialized_end=154,
+)
+
+
+_AUTHORIZATIONREQUEST = _descriptor.Descriptor(
+  name='AuthorizationRequest',
+  full_name='sctp.AuthorizationRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='hash', full_name='sctp.AuthorizationRequest.hash', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=156,
+  serialized_end=192,
 )
 
 
@@ -163,8 +227,8 @@ _AUTHORIZATIONRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=132,
-  serialized_end=260,
+  serialized_start=195,
+  serialized_end=323,
 )
 
 
@@ -195,8 +259,8 @@ _CREATEELEMENTSREQUEST_NODE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=343,
-  serialized_end=363,
+  serialized_start=406,
+  serialized_end=426,
 )
 
 _CREATEELEMENTSREQUEST_EDGE_ELEMENT = _descriptor.Descriptor(
@@ -233,8 +297,8 @@ _CREATEELEMENTSREQUEST_EDGE_ELEMENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=504,
-  serialized_end=545,
+  serialized_start=567,
+  serialized_end=608,
 )
 
 _CREATEELEMENTSREQUEST_EDGE = _descriptor.Descriptor(
@@ -278,8 +342,8 @@ _CREATEELEMENTSREQUEST_EDGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=366,
-  serialized_end=545,
+  serialized_start=429,
+  serialized_end=608,
 )
 
 _CREATEELEMENTSREQUEST_LINK = _descriptor.Descriptor(
@@ -342,8 +406,8 @@ _CREATEELEMENTSREQUEST_LINK = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=548,
-  serialized_end=678,
+  serialized_start=611,
+  serialized_end=741,
 )
 
 _CREATEELEMENTSREQUEST_ELEMENT = _descriptor.Descriptor(
@@ -392,8 +456,8 @@ _CREATEELEMENTSREQUEST_ELEMENT = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=681,
-  serialized_end=857,
+  serialized_start=744,
+  serialized_end=920,
 )
 
 _CREATEELEMENTSREQUEST = _descriptor.Descriptor(
@@ -423,8 +487,8 @@ _CREATEELEMENTSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=263,
-  serialized_end=857,
+  serialized_start=326,
+  serialized_end=920,
 )
 
 
@@ -448,8 +512,8 @@ _CREATEELEMENTSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=859,
-  serialized_end=883,
+  serialized_start=922,
+  serialized_end=946,
 )
 
 
@@ -476,15 +540,22 @@ _REQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='auth', full_name='sctp.Request.auth', index=2,
-      number=3, type=11, cpp_type=10, label=1,
+      name='handshake', full_name='sctp.Request.handshake', index=2,
+      number=21, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='create', full_name='sctp.Request.create', index=3,
-      number=4, type=11, cpp_type=10, label=1,
+      name='auth', full_name='sctp.Request.auth', index=3,
+      number=22, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='create', full_name='sctp.Request.create', index=4,
+      number=23, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -506,8 +577,8 @@ _REQUEST = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=886,
-  serialized_end=1034,
+  serialized_start=949,
+  serialized_end=1142,
 )
 
 
@@ -534,15 +605,22 @@ _RESPONSE = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='atuh', full_name='sctp.Response.atuh', index=2,
-      number=3, type=11, cpp_type=10, label=1,
+      name='handshake', full_name='sctp.Response.handshake', index=2,
+      number=21, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='create', full_name='sctp.Response.create', index=3,
-      number=4, type=11, cpp_type=10, label=1,
+      name='atuh', full_name='sctp.Response.atuh', index=3,
+      number=22, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='create', full_name='sctp.Response.create', index=4,
+      number=23, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -564,8 +642,8 @@ _RESPONSE = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=1037,
-  serialized_end=1189,
+  serialized_start=1145,
+  serialized_end=1343,
 )
 
 _AUTHORIZATIONRESPONSE.fields_by_name['status'].enum_type = _AUTHORIZATIONRESPONSE_STATUS
@@ -602,16 +680,24 @@ _CREATEELEMENTSREQUEST_ELEMENT.oneofs_by_name['element_oneof'].fields.append(
   _CREATEELEMENTSREQUEST_ELEMENT.fields_by_name['link'])
 _CREATEELEMENTSREQUEST_ELEMENT.fields_by_name['link'].containing_oneof = _CREATEELEMENTSREQUEST_ELEMENT.oneofs_by_name['element_oneof']
 _CREATEELEMENTSREQUEST.fields_by_name['elements'].message_type = _CREATEELEMENTSREQUEST_ELEMENT
+_REQUEST.fields_by_name['handshake'].message_type = _HANDSHAKEREQUEST
 _REQUEST.fields_by_name['auth'].message_type = _AUTHORIZATIONREQUEST
 _REQUEST.fields_by_name['create'].message_type = _CREATEELEMENTSREQUEST
+_REQUEST.oneofs_by_name['request_oneof'].fields.append(
+  _REQUEST.fields_by_name['handshake'])
+_REQUEST.fields_by_name['handshake'].containing_oneof = _REQUEST.oneofs_by_name['request_oneof']
 _REQUEST.oneofs_by_name['request_oneof'].fields.append(
   _REQUEST.fields_by_name['auth'])
 _REQUEST.fields_by_name['auth'].containing_oneof = _REQUEST.oneofs_by_name['request_oneof']
 _REQUEST.oneofs_by_name['request_oneof'].fields.append(
   _REQUEST.fields_by_name['create'])
 _REQUEST.fields_by_name['create'].containing_oneof = _REQUEST.oneofs_by_name['request_oneof']
+_RESPONSE.fields_by_name['handshake'].message_type = _HANDSHAKERESPONSE
 _RESPONSE.fields_by_name['atuh'].message_type = _AUTHORIZATIONRESPONSE
 _RESPONSE.fields_by_name['create'].message_type = _CREATEELEMENTSRESPONSE
+_RESPONSE.oneofs_by_name['response_oneof'].fields.append(
+  _RESPONSE.fields_by_name['handshake'])
+_RESPONSE.fields_by_name['handshake'].containing_oneof = _RESPONSE.oneofs_by_name['response_oneof']
 _RESPONSE.oneofs_by_name['response_oneof'].fields.append(
   _RESPONSE.fields_by_name['atuh'])
 _RESPONSE.fields_by_name['atuh'].containing_oneof = _RESPONSE.oneofs_by_name['response_oneof']
@@ -619,6 +705,8 @@ _RESPONSE.oneofs_by_name['response_oneof'].fields.append(
   _RESPONSE.fields_by_name['create'])
 _RESPONSE.fields_by_name['create'].containing_oneof = _RESPONSE.oneofs_by_name['response_oneof']
 DESCRIPTOR.message_types_by_name['PacketHeader'] = _PACKETHEADER
+DESCRIPTOR.message_types_by_name['HandshakeRequest'] = _HANDSHAKEREQUEST
+DESCRIPTOR.message_types_by_name['HandshakeResponse'] = _HANDSHAKERESPONSE
 DESCRIPTOR.message_types_by_name['AuthorizationRequest'] = _AUTHORIZATIONREQUEST
 DESCRIPTOR.message_types_by_name['AuthorizationResponse'] = _AUTHORIZATIONRESPONSE
 DESCRIPTOR.message_types_by_name['CreateElementsRequest'] = _CREATEELEMENTSREQUEST
@@ -633,6 +721,20 @@ PacketHeader = _reflection.GeneratedProtocolMessageType('PacketHeader', (_messag
   # @@protoc_insertion_point(class_scope:sctp.PacketHeader)
   })
 _sym_db.RegisterMessage(PacketHeader)
+
+HandshakeRequest = _reflection.GeneratedProtocolMessageType('HandshakeRequest', (_message.Message,), {
+  'DESCRIPTOR' : _HANDSHAKEREQUEST,
+  '__module__' : 'sctp_pb2'
+  # @@protoc_insertion_point(class_scope:sctp.HandshakeRequest)
+  })
+_sym_db.RegisterMessage(HandshakeRequest)
+
+HandshakeResponse = _reflection.GeneratedProtocolMessageType('HandshakeResponse', (_message.Message,), {
+  'DESCRIPTOR' : _HANDSHAKERESPONSE,
+  '__module__' : 'sctp_pb2'
+  # @@protoc_insertion_point(class_scope:sctp.HandshakeResponse)
+  })
+_sym_db.RegisterMessage(HandshakeResponse)
 
 AuthorizationRequest = _reflection.GeneratedProtocolMessageType('AuthorizationRequest', (_message.Message,), {
   'DESCRIPTOR' : _AUTHORIZATIONREQUEST,

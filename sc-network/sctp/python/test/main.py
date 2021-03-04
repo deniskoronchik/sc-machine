@@ -1,18 +1,17 @@
 
+from optparse import OptionParser
+from test_connect import TestServerConnect
+from fixture import TestServer
+from unittest import defaultTestLoader, TestCase, TextTestRunner, TestSuite
+
 import os
 import sys
 
 curr_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(curr_dir, '../'))
 
-from unittest import defaultTestLoader, TestCase, TextTestRunner, TestSuite
-
-from fixture import TestServer
-from test_connect import TestServerConnect
-from optparse import OptionParser
-
 if __name__ == "__main__":
-  
+
   parser = OptionParser()
   parser.add_option("-e", "--external-server",
                     action="store_false", dest="run_server", default=True,
@@ -23,7 +22,7 @@ if __name__ == "__main__":
   TestServer.self_run = options.run_server
 
   tests = [
-    TestServerConnect
+      TestServerConnect
   ]
 
   for testItem in tests:
