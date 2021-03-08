@@ -29,7 +29,8 @@ void Server::Run()
   m_impl = std::make_unique<impl::Server>(
         m_config->ServerHost(),
         m_config->ServerPort(),
-        m_config->ServerThreads());
+        m_config->ServerThreads(),
+        m_config->ServerUserDB());
 
   m_impl->Run();
 

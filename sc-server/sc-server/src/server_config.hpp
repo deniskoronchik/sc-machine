@@ -13,6 +13,7 @@ public:
   std::string const kServerHost = "server.host";
   std::string const kServerPort = "server.port";
   std::string const kServerThreads = "server.threads";
+  std::string const kServerUserDB = "server.user_db";
 
 public:
   explicit ServerConfig(boost::program_options::variables_map && vm);
@@ -25,6 +26,7 @@ public:
   std::string ServerHost() const;
   uint16_t ServerPort() const;
   uint16_t ServerThreads() const;
+  std::string ServerUserDB() const;
 
   void LogConfig();
 

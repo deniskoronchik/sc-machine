@@ -28,14 +28,14 @@ sequenceDiagram
     
     Server-->>Client: Response
     deactivate Server
-    Note right of Client: Resturns random string
+    Note right of Client: Resturns salt string
 
     %% <<< handshake
 
     %% auth >>>
     Client->>Server: Authorization
     activate Server
-    Note right of Client: Sends string wrapped with password
+    Note right of Client: Sends satled password
 
     Server->>Users: Check User
     activate Users
@@ -83,39 +83,4 @@ sequenceDiagram
 ```
 
 
-## Requests
-
-### Handshake
-
----
-
-Each request (excluding [Handshake](#handshake)) has a common structure:
-
-=== "Json"
-    ```json
-    {
-      "id": 2,
-      "type": "request type",
-      "payload": {
-        ...
-      }
-    }
-    ```
-
-### Authorization
-
-### CreateElements
-
-### CheckElements
-
-### DeleteElements
-
-### SearchByTemplate
-
-### GenerateByTemplate
-
-### Events
-
-### Keynodes
-
-### Content
+See `sctp.proto` file for more information

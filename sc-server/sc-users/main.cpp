@@ -15,6 +15,22 @@ size_t const kMaxLoginLength = 32;
 namespace
 {
 
+constexpr char hexmap[] = {'0', '1', '2', '3', '4', '5', '6', '7',
+                           '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+
+std::string HexString(uint8_t * data, size_t len)
+{
+  std::string s(len * 2, ' ');
+  for (size_t i = 0; i < len; ++i)
+  {
+    s[2 * i + 1] = hexmap[data[i] & 0x0F];
+    s[2 * i] = hexmap[(data[i] & 0xF0) >> 4];
+  }
+
+  return s;
+}
+
+
 class Database
 {
 public:
@@ -198,9 +214,7 @@ private:
       {
         unsigned char buffer[32];
         if (mbedtls_sha256_finish_ret(&hashContext, buffer) == 0)
-        {
-          result = std::string ((char*)buffer, 32);
-        }
+          result = HexString(buffer, 32);
       }
     }
     mbedtls_sha256_free(&hashContext);

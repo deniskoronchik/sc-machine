@@ -42,6 +42,11 @@ uint16_t ServerConfig::ServerThreads() const
   return GetValue<uint16_t>(kServerThreads);
 }
 
+std::string ServerConfig::ServerUserDB() const
+{
+  return GetValue<std::string>(kServerUserDB);
+}
+
 void ServerConfig::LogConfig()
 {
   for (auto const & it : m_varMap)

@@ -8,7 +8,7 @@ import unittest
 curr_dir = os.path.dirname(os.path.abspath(__file__))
 bin_dir = os.path.join(curr_dir, '../../../../bin/')
 
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+# logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 
 class TestServer(unittest.TestCase):

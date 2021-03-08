@@ -1,5 +1,7 @@
 #include "server.hpp"
 
+#include "auth_service.hpp"
+
 #include <boost/thread/thread.hpp>
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
@@ -12,11 +14,13 @@
 namespace impl
 {
 
-Server::Server(std::string const & host, uint16_t port, uint16_t threadsNum)
+Server::Server(std::string const & host, uint16_t port, uint16_t threadsNum, std::string const & dbPath)
   : m_threadsNum(threadsNum)
   , m_signals(m_ioService)
   , m_acceptor(m_ioService)
 {
+  m_authService = std::make_shared<AuthService>(dbPath);
+
   // Register to handle the signals that indicate when the server should exit.
   // It is safe to register for the same signal multiple times in a program,
   // provided all registration for the specified signal is made through Asio.
@@ -37,6 +41,10 @@ Server::Server(std::string const & host, uint16_t port, uint16_t threadsNum)
   m_acceptor.listen();
 
   StartAccept();
+}
+
+Server::~Server()
+{
 }
 
 void Server::Run()
@@ -70,7 +78,7 @@ void Server::Run()
 
 void Server::StartAccept()
 {
-  SessionPtr session(new Session(m_ioService));
+  SessionPtr session(new Session(m_ioService, m_authService));
 
   m_acceptor.async_accept(
         session->Socket(),

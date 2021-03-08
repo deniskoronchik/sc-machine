@@ -54,7 +54,9 @@ int main(int argc, char *argv[]) try
       ("server.port", bpo::value<uint16_t>()->default_value(55770),
        "Server port")
       ("server.threads", bpo::value<uint16_t>()->default_value(0),
-       "Number of threads to process connections");
+       "Number of threads to process connections")
+      ("server.user_db", bpo::value<std::string>()->default_value("users.db"),
+       ("Path to users database"));
 
   bpo::variables_map vm;
   try

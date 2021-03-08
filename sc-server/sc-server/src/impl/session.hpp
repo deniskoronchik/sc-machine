@@ -21,7 +21,7 @@ class Session :
     private boost::noncopyable
 {
 public:
-  explicit Session(boost::asio::io_service & ioService);
+  explicit Session(boost::asio::io_service & ioService, std::shared_ptr<AuthService> authService);
 
   void Start();
 
@@ -32,7 +32,10 @@ public:
 protected:
   void ReadSocket();
 
+  void ProcessPacket();
+
   void HandleRead(boost::system::error_code const & error, size_t bytesTransfered);
+  void HandleWrite(boost::system::error_code const & error);
 
   // Adds session info to string message
   std::string MakeMessage(std::string const & msg) const;
@@ -52,9 +55,6 @@ private:
   // Packets
   struct Packet
   {
-    using DataArray = std::array<uint8_t, 4>;
-    DataArray watermark;
-
     uint32_t received = 0;
     uint32_t size = 0;
     std::vector<uint8_t> data;
@@ -73,8 +73,9 @@ private:
     using Ptr = std::unique_ptr<Packet>;
   };
 
-  std::vector<uint8_t> m_part;
-  std::queue<std::unique_ptr<Packet>> m_packetsQueue;
+  std::vector<uint8_t> m_partialData;
+  std::unique_ptr<Packet> m_packet;
+  RequestHandler m_handler;
 };
 
 using SessionPtr = boost::shared_ptr<Session>;

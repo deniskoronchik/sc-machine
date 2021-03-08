@@ -1,6 +1,7 @@
 
 from optparse import OptionParser
 from test_connect import TestServerConnect
+from test_utils import TestUtils
 from fixture import TestServer
 from unittest import defaultTestLoader, TestCase, TextTestRunner, TestSuite
 
@@ -22,7 +23,8 @@ if __name__ == "__main__":
   TestServer.self_run = options.run_server
 
   tests = [
-      TestServerConnect
+      TestServerConnect,
+      TestUtils,
   ]
 
   for testItem in tests:
