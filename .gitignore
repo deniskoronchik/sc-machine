@@ -18,3 +18,5 @@ manifest.json
 __pycache__
 .DS_store
 .antlr
+
+*.code-workspace

@@ -23,16 +23,16 @@ int main(int argc, char *argv[]) try
     bpo::store(bpo::command_line_parser(argc, argv).options(options_description).run(), vm);
     bpo::notify(vm);
 
-    if (vm.count("config"))
-      configFile = vm["config"].as<std::string>();
-    else
-      return 0;
-
     if (vm.count("help"))
     {
       std::cout << options_description;
       return 0;
     }
+
+    if (vm.count("config"))
+      configFile = vm["config"].as<std::string>();
+    else
+      return 0;
   }
 
   // configuration file

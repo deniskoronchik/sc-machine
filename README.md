@@ -79,7 +79,7 @@ make
 
 - Install dependencies with brew:
 ```
-brew install boost glib llvm antlr antlr4-cpp-runtime pkgconfig rocksdb protobuf
+brew install boost glib llvm antlr antlr4-cpp-runtime pkgconfig rocksdb protobuf openjdk
 ```
 
 - Install python 3.8
